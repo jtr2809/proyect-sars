@@ -79,9 +79,9 @@
 	<div id="footer">
 		<img id="logo-footer" src="../img/logo-footer.png" alt=""/>
 		<p>Ministerio de las Culturas, las Artes y el Patrimonio</a> <br/>
-<a href="http://www.gob.cl">Gobierno de Chile</a> <br/>
-Contáctanos: <a href="http://formulariosiac.cultura.gob.cl/">Formulario de atención ciudadana</a> <br/>
-<a href="http://www.cultura.gob.cl/politica-de-privacidad/">Política de Privacidad</a></p> 
+<a href="*">Gobierno de Chile</a> <br/>
+Contáctanos: <a href="*">Formulario de atención ciudadana</a> <br/>
+<a href="*">Política de Privacidad</a></p> 
 	</div>
 
 
