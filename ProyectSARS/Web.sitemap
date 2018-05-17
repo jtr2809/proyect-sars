@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<siteMap xmlns="http://schemas.microsoft.com/AspNet/SiteMap-File-1.0" >
+  <siteMapNode url="~/Default.aspx" title="Inicio"  description="Página de Inicio">
+    <siteMapNode url="~/Admin/Admin.aspx" title="Administración"  description="Administración" roles="Admins">
+      <siteMapNode url="~/Admin/EditarSala.aspx" title="Edición de Salas"  description="Editor de Salas" roles="Admins" />
+      <siteMapNode url="~/Admin/Ubicaciones.aspx" title="Ubicaciones"  description="Ubicaciones" roles="Admins" />
+    </siteMapNode>
+    <siteMapNode url="~/Coord/Coordinador.aspx" title="Coordinador"  description="Coordinador" roles="Coordinnador" />
+    <siteMapNode url="~/Usuario/Historial.aspx" title="Historial" description="Historial de Reservas"/>
+    <siteMapNode url="~/Usuario/VerSolicitudes.aspx" title="Ver Solicitudes" description="Ver Solicitudes Activas"/>
+  </siteMapNode>
+</siteMap>

@@ -1,0 +1,294 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="test_SARSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ESTADO">
+          <Key>
+            <PropertyRef Name="IdEstado" />
+          </Key>
+          <Property Name="IdEstado" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NombreEstado" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RESERVA">
+          <Key>
+            <PropertyRef Name="ID_RESERVA" />
+          </Key>
+          <Property Name="ID_RESERVA" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDSALA" Type="int" />
+          <Property Name="ID_USUARIO" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="FECHA" Type="datetime" Nullable="false" />
+          <Property Name="HORA_INICIO" Type="datetime" Nullable="false" />
+          <Property Name="HORA_TERMINO" Type="datetime" Nullable="false" />
+          <Property Name="IDESTADO" Type="int" Nullable="false" />
+          <Property Name="ACTIVO" Type="bit" Nullable="false" />
+          <Property Name="MOTIVO" Type="varchar" MaxLength="1000" />
+        </EntityType>
+        <EntityType Name="SALA">
+          <Key>
+            <PropertyRef Name="IDSALA" />
+          </Key>
+          <Property Name="IDSALA" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_UBICACION" Type="int" />
+          <Property Name="IDCOORD" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="NOMBRESALA" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CAPACIDAD" Type="int" Nullable="false" />
+          <Property Name="PISO" Type="int" Nullable="false" />
+          <Property Name="EQUIPAMIENTO" Type="varchar" MaxLength="1024" Nullable="false" />
+          <Property Name="POSEE_NOTE" Type="bit" Nullable="false" />
+          <Property Name="POSEE_MONITOR" Type="bit" Nullable="false" />
+          <Property Name="POSEE_VC" Type="bit" Nullable="false" />
+          <Property Name="DISPONIBILIDAD" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UBICACION">
+          <Key>
+            <PropertyRef Name="ID_UBICACION" />
+          </Key>
+          <Property Name="ID_UBICACION" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DESCRIPCION" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="ACTIVO" Type="bit" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_RESERVA_TIENE_ESTADO">
+          <End Role="ESTADO" Type="Self.ESTADO" Multiplicity="1" />
+          <End Role="RESERVA" Type="Self.RESERVA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ESTADO">
+              <PropertyRef Name="IdEstado" />
+            </Principal>
+            <Dependent Role="RESERVA">
+              <PropertyRef Name="IDESTADO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RESERVA_TIENE_SALA">
+          <End Role="SALA" Type="Self.SALA" Multiplicity="0..1" />
+          <End Role="RESERVA" Type="Self.RESERVA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SALA">
+              <PropertyRef Name="IDSALA" />
+            </Principal>
+            <Dependent Role="RESERVA">
+              <PropertyRef Name="IDSALA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SALA_POSEE_UBICACIO">
+          <End Role="UBICACION" Type="Self.UBICACION" Multiplicity="0..1" />
+          <End Role="SALA" Type="Self.SALA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UBICACION">
+              <PropertyRef Name="ID_UBICACION" />
+            </Principal>
+            <Dependent Role="SALA">
+              <PropertyRef Name="ID_UBICACION" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="test_SARSModelStoreContainer">
+          <EntitySet Name="ESTADO" EntityType="Self.ESTADO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RESERVA" EntityType="Self.RESERVA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SALA" EntityType="Self.SALA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UBICACION" EntityType="Self.UBICACION" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_RESERVA_TIENE_ESTADO" Association="Self.FK_RESERVA_TIENE_ESTADO">
+            <End Role="ESTADO" EntitySet="ESTADO" />
+            <End Role="RESERVA" EntitySet="RESERVA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RESERVA_TIENE_SALA" Association="Self.FK_RESERVA_TIENE_SALA">
+            <End Role="SALA" EntitySet="SALA" />
+            <End Role="RESERVA" EntitySet="RESERVA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SALA_POSEE_UBICACIO" Association="Self.FK_SALA_POSEE_UBICACIO">
+            <End Role="UBICACION" EntitySet="UBICACION" />
+            <End Role="SALA" EntitySet="SALA" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="test_SARSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ESTADO">
+          <Key>
+            <PropertyRef Name="IdEstado" />
+          </Key>
+          <Property Name="IdEstado" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NombreEstado" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="RESERVA" Relationship="Self.FK_RESERVA_TIENE_ESTADO" FromRole="ESTADO" ToRole="RESERVA" />
+        </EntityType>
+        <EntityType Name="RESERVA">
+          <Key>
+            <PropertyRef Name="ID_RESERVA" />
+          </Key>
+          <Property Name="ID_RESERVA" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDSALA" Type="Int32" />
+          <Property Name="ID_USUARIO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FECHA" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="HORA_INICIO" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="HORA_TERMINO" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IDESTADO" Type="Int32" Nullable="false" />
+          <Property Name="ACTIVO" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="ESTADO" Relationship="Self.FK_RESERVA_TIENE_ESTADO" FromRole="RESERVA" ToRole="ESTADO" />
+          <NavigationProperty Name="SALA" Relationship="Self.FK_RESERVA_TIENE_SALA" FromRole="RESERVA" ToRole="SALA" />
+          <Property Name="MOTIVO" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="SALA">
+          <Key>
+            <PropertyRef Name="IDSALA" />
+          </Key>
+          <Property Name="IDSALA" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_UBICACION" Type="Int32" />
+          <Property Name="IDCOORD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NOMBRESALA" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CAPACIDAD" Type="Int32" Nullable="false" />
+          <Property Name="PISO" Type="Int32" Nullable="false" />
+          <Property Name="EQUIPAMIENTO" Type="String" MaxLength="1024" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="POSEE_NOTE" Type="Boolean" Nullable="false" />
+          <Property Name="POSEE_MONITOR" Type="Boolean" Nullable="false" />
+          <Property Name="POSEE_VC" Type="Boolean" Nullable="false" />
+          <Property Name="DISPONIBILIDAD" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="RESERVA" Relationship="Self.FK_RESERVA_TIENE_SALA" FromRole="SALA" ToRole="RESERVA" />
+          <NavigationProperty Name="UBICACION" Relationship="Self.FK_SALA_POSEE_UBICACIO" FromRole="SALA" ToRole="UBICACION" />
+        </EntityType>
+        <EntityType Name="UBICACION">
+          <Key>
+            <PropertyRef Name="ID_UBICACION" />
+          </Key>
+          <Property Name="ID_UBICACION" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DESCRIPCION" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="SALA" Relationship="Self.FK_SALA_POSEE_UBICACIO" FromRole="UBICACION" ToRole="SALA" />
+          <Property Name="ACTIVO" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_RESERVA_TIENE_ESTADO">
+          <End Role="ESTADO" Type="Self.ESTADO" Multiplicity="1" />
+          <End Role="RESERVA" Type="Self.RESERVA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ESTADO">
+              <PropertyRef Name="IdEstado" />
+            </Principal>
+            <Dependent Role="RESERVA">
+              <PropertyRef Name="IDESTADO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RESERVA_TIENE_SALA">
+          <End Role="SALA" Type="Self.SALA" Multiplicity="0..1" />
+          <End Role="RESERVA" Type="Self.RESERVA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SALA">
+              <PropertyRef Name="IDSALA" />
+            </Principal>
+            <Dependent Role="RESERVA">
+              <PropertyRef Name="IDSALA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SALA_POSEE_UBICACIO">
+          <End Role="UBICACION" Type="Self.UBICACION" Multiplicity="0..1" />
+          <End Role="SALA" Type="Self.SALA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UBICACION">
+              <PropertyRef Name="ID_UBICACION" />
+            </Principal>
+            <Dependent Role="SALA">
+              <PropertyRef Name="ID_UBICACION" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Entidades1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ESTADO" EntityType="Self.ESTADO" />
+          <EntitySet Name="RESERVA" EntityType="Self.RESERVA" />
+          <EntitySet Name="SALA" EntityType="Self.SALA" />
+          <EntitySet Name="UBICACION" EntityType="Self.UBICACION" />
+          <AssociationSet Name="FK_RESERVA_TIENE_ESTADO" Association="Self.FK_RESERVA_TIENE_ESTADO">
+            <End Role="ESTADO" EntitySet="ESTADO" />
+            <End Role="RESERVA" EntitySet="RESERVA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RESERVA_TIENE_SALA" Association="Self.FK_RESERVA_TIENE_SALA">
+            <End Role="SALA" EntitySet="SALA" />
+            <End Role="RESERVA" EntitySet="RESERVA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SALA_POSEE_UBICACIO" Association="Self.FK_SALA_POSEE_UBICACIO">
+            <End Role="UBICACION" EntitySet="UBICACION" />
+            <End Role="SALA" EntitySet="SALA" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="test_SARSModelStoreContainer" CdmEntityContainer="Entidades1">
+          <EntitySetMapping Name="ESTADO">
+            <EntityTypeMapping TypeName="test_SARSModel.ESTADO">
+              <MappingFragment StoreEntitySet="ESTADO">
+                <ScalarProperty Name="IdEstado" ColumnName="IdEstado" />
+                <ScalarProperty Name="NombreEstado" ColumnName="NombreEstado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RESERVA">
+            <EntityTypeMapping TypeName="test_SARSModel.RESERVA">
+              <MappingFragment StoreEntitySet="RESERVA">
+                <ScalarProperty Name="MOTIVO" ColumnName="MOTIVO" />
+                <ScalarProperty Name="ID_RESERVA" ColumnName="ID_RESERVA" />
+                <ScalarProperty Name="IDSALA" ColumnName="IDSALA" />
+                <ScalarProperty Name="ID_USUARIO" ColumnName="ID_USUARIO" />
+                <ScalarProperty Name="FECHA" ColumnName="FECHA" />
+                <ScalarProperty Name="HORA_INICIO" ColumnName="HORA_INICIO" />
+                <ScalarProperty Name="HORA_TERMINO" ColumnName="HORA_TERMINO" />
+                <ScalarProperty Name="IDESTADO" ColumnName="IDESTADO" />
+                <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SALA">
+            <EntityTypeMapping TypeName="test_SARSModel.SALA">
+              <MappingFragment StoreEntitySet="SALA">
+                <ScalarProperty Name="IDSALA" ColumnName="IDSALA" />
+                <ScalarProperty Name="ID_UBICACION" ColumnName="ID_UBICACION" />
+                <ScalarProperty Name="IDCOORD" ColumnName="IDCOORD" />
+                <ScalarProperty Name="NOMBRESALA" ColumnName="NOMBRESALA" />
+                <ScalarProperty Name="CAPACIDAD" ColumnName="CAPACIDAD" />
+                <ScalarProperty Name="PISO" ColumnName="PISO" />
+                <ScalarProperty Name="EQUIPAMIENTO" ColumnName="EQUIPAMIENTO" />
+                <ScalarProperty Name="POSEE_NOTE" ColumnName="POSEE_NOTE" />
+                <ScalarProperty Name="POSEE_MONITOR" ColumnName="POSEE_MONITOR" />
+                <ScalarProperty Name="POSEE_VC" ColumnName="POSEE_VC" />
+                <ScalarProperty Name="DISPONIBILIDAD" ColumnName="DISPONIBILIDAD" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UBICACION">
+            <EntityTypeMapping TypeName="test_SARSModel.UBICACION">
+              <MappingFragment StoreEntitySet="UBICACION">
+                <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+                <ScalarProperty Name="ID_UBICACION" ColumnName="ID_UBICACION" />
+                <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
